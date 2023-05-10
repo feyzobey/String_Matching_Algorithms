@@ -1,6 +1,3 @@
-//apply brute force string matching algorithm to find the pattern in the text
-//return the index of the first occurrence of the pattern in the text
-
 function bruteForce(text, pattern) {
     const textLength = text.length;
     const patternLength = pattern.length;
@@ -18,3 +15,19 @@ function bruteForce(text, pattern) {
 
     return -1;
 }
+
+// tests
+console.log(bruteForce('abcbcglx', 'bcgl')); // 3
+
+console.time("test_timer");
+console.log(bruteForce('abcxabcdabxabcdabcdabcy', 'abcdabcy')); // 15
+console.timeEnd("test_timer");
+
+console.log(bruteForce('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')); // 12
+console.log(bruteForce('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')); // 11
+console.log(bruteForce('abcxabcdabxaabaabaaaabcdabcdabcy', 'abcdabca')); // -1
+
+console.log(bruteForce('abcxabcdabxabcdabcdabcy', 'abcdabca')); // -1
+
+// Time complexity: O(mn)
+// Space complexity: O(1)

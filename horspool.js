@@ -1,8 +1,6 @@
-// apply horspool algorithm to find the pattern in the text
-// return the index of the first occurrence of the pattern in the text
-
 function horspool(text, pattern) {
     // create the bad match table
+
     const badMatchTable = {};
     const patternLength = pattern.length;
     const textLength = text.length;
@@ -29,3 +27,15 @@ function horspool(text, pattern) {
 
     return -1;
 }
+
+// tests
+console.log(horspool('abcbcglx', 'bcgl')); // 3
+console.time("test_timer");
+console.log(horspool('abcxabcdabxabcdabcdabcy', 'abcdabcy')); // 15
+console.timeEnd("test_timer");
+console.log(horspool('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')); // 12
+console.log(horspool('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')); // 11
+console.log(horspool('abcxabcdabxaabaabaaaabcdabcdabcy', 'abcdabca')); // -1
+console.log(horspool('abcxabcdabxabcdabcdabcy', 'abcdabca')); // -1
+// Time complexity: O(mn)
+// Space complexity: O(m + n)

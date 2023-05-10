@@ -1,6 +1,3 @@
-// apply boyer moore algorithm to find the pattern in the text
-// return the index of the first occurrence of the pattern in the text
-
 function boyerMoore(text, pattern) {
     // create the bad match table
     const badMatchTable = {};
@@ -29,3 +26,16 @@ function boyerMoore(text, pattern) {
 
     return -1;
 }
+
+// tests
+console.log(boyerMoore('abcbcglx', 'bcgl')); // 3
+console.time("test_timer");
+console.log(boyerMoore('abcxabcdabxabcdabcdabcy', 'abcdabcy')); // 15
+console.timeEnd("test_timer");
+console.log(boyerMoore('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')); // 12
+console.log(boyerMoore('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')); // 11
+console.log(boyerMoore('abcxabcdabxaabaabaaaabcdabcdabcy', 'abcdabca')); // -1
+console.log(boyerMoore('abcxabcdabxabcdabcdabcy', 'abcdabca')); // -1
+
+// Time complexity: O(mn)
+// Space complexity: O(m + n)
