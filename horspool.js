@@ -1,9 +1,16 @@
+let fs = require('fs');
+
+// Time complexity: O(mn)
+// Space complexity: O(m + n)
 function horspool(text, pattern) {
     // create the bad match table
 
     const badMatchTable = {};
     const patternLength = pattern.length;
     const textLength = text.length;
+
+    let comparisons = 0;
+    let occurrences = 0;
 
     // create the bad match table
     for (let i = 0; i < patternLength - 1; i++) {
@@ -15,27 +22,28 @@ function horspool(text, pattern) {
     while (i < textLength) {
         let k = 0;
         while (k < patternLength && pattern[patternLength - 1 - k] === text[i - k]) {
+            comparisons++;
             k++;
         }
 
         if (k === patternLength) {
-            return i - patternLength + 1;
-        } else {
-            i += badMatchTable[text[i]];
+            occurrences++;
+            console.log(`Found at index: ${i - patternLength + 1}`);
         }
+        comparisons++;
+        i += badMatchTable[text[i]];
     }
 
-    return -1;
+    return { comparisons, occurrences };
 }
 
-// tests
-console.log(horspool('abcbcglx', 'bcgl')); // 3
-console.time("test_timer");
-console.log(horspool('abcxabcdabxabcdabcdabcy', 'abcdabcy')); // 15
-console.timeEnd("test_timer");
-console.log(horspool('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')); // 12
-console.log(horspool('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')); // 11
-console.log(horspool('abcxabcdabxaabaabaaaabcdabcdabcy', 'abcdabca')); // -1
-console.log(horspool('abcxabcdabxabcdabcdabcy', 'abcdabca')); // -1
-// Time complexity: O(mn)
-// Space complexity: O(m + n)
+fs.readFile('sample.html', 'utf8', function (err, data) {
+    if (err) {
+        return console.log(err);
+    }
+    let html_text = data.split("<h1>")[1].split("</h1>")[0];
+    console.time("test_timer");
+    result = horspool(html_text, ".");
+    console.timeEnd("test_timer");
+    console.table(result);
+});

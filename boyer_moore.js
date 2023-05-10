@@ -1,8 +1,15 @@
+let fs = require('fs');
+
+// Time complexity: O(mn)
+// Space complexity: O(m + n)
 function boyerMoore(text, pattern) {
     // create the bad match table
     const badMatchTable = {};
     const patternLength = pattern.length;
     const textLength = text.length;
+
+    let comparisons = 0;
+    let occurrences = 0;
 
     // create the bad match table
     for (let i = 0; i < patternLength - 1; i++) {
@@ -14,28 +21,28 @@ function boyerMoore(text, pattern) {
     while (i < textLength) {
         let k = 0;
         while (k < patternLength && pattern[patternLength - 1 - k] === text[i - k]) {
+            comparisons++;
             k++;
         }
 
         if (k === patternLength) {
-            return i - patternLength + 1;
-        } else {
-            i += badMatchTable[text[i]] || patternLength;
+            occurrences++;
+            console.log(`Found at index: ${i - patternLength + 1}`);
         }
+        comparisons++;
+        i += badMatchTable[text[i]] || patternLength;
     }
 
-    return -1;
+    return { comparisons, occurrences };
 }
 
-// tests
-console.log(boyerMoore('abcbcglx', 'bcgl')); // 3
-console.time("test_timer");
-console.log(boyerMoore('abcxabcdabxabcdabcdabcy', 'abcdabcy')); // 15
-console.timeEnd("test_timer");
-console.log(boyerMoore('abcxabcdabxaabcdabcabcdabcdabcy', 'abcdabca')); // 12
-console.log(boyerMoore('abcxabcdabxaabaabaaaabcdabcdabcy', 'aabaabaaa')); // 11
-console.log(boyerMoore('abcxabcdabxaabaabaaaabcdabcdabcy', 'abcdabca')); // -1
-console.log(boyerMoore('abcxabcdabxabcdabcdabcy', 'abcdabca')); // -1
-
-// Time complexity: O(mn)
-// Space complexity: O(m + n)
+fs.readFile('sample.html', 'utf8', function (err, data) {
+    if (err) {
+        return console.log(err);
+    }
+    let html_text = data.split("<h1>")[1].split("</h1>")[0];
+    console.time("test_timer");
+    result = boyerMoore(html_text, ".");
+    console.timeEnd("test_timer");
+    console.table(result);
+});
