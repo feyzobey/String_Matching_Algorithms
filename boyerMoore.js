@@ -1,11 +1,11 @@
 // Time complexity: O(mn)
 // Space complexity: O(m + n)
-function horspool(text, pattern) {
+function boyerMoore(text, pattern) {
     // create the bad match table
-
     const badMatchTable = {};
     const patternLength = pattern.length;
     const textLength = text.length;
+    const indexes = [];
 
     let comparisons = 0;
     let occurrences = 0;
@@ -27,12 +27,12 @@ function horspool(text, pattern) {
         if (k === patternLength) {
             occurrences++;
             console.log(`Found at index: ${i - patternLength + 1}`);
+            indexes.push(i - patternLength + 1);
         }
         comparisons++;
-        i += badMatchTable[text[i]];
+        i += badMatchTable[text[i]] || patternLength;
     }
 
-    return { comparisons, occurrences };
+    return { badMatchTable, indexes, comparisons, occurrences };
 }
-
-module.exports = { horspool };
+module.exports = { boyerMoore };

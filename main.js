@@ -1,68 +1,7 @@
-let fs = require('fs');
-
-// Time complexity: O(mn)
-// Space complexity: O(1)
-
-function bruteForce(text, pattern) {
-    const textLength = text.length;
-    const patternLength = pattern.length;
-    const indexes = [];
-
-    let comparisons = 0;
-    let occurrences = 0;
-
-    for (let i = 0; i <= textLength - patternLength; i++) {
-        let j = 0;
-        while (j < patternLength && pattern[j] === text[i + j]) {
-            comparisons++;
-            j++;
-        }
-
-        if (j === patternLength) {
-            occurrences++;
-            console.log(`Found at index: ${i}`);
-            indexes.push(i);
-        }
-    }
-
-    return { indexes, comparisons, occurrences };
-}
-
-function boyerMoore(text, pattern) {
-    // create the bad match table
-    const badMatchTable = {};
-    const patternLength = pattern.length;
-    const textLength = text.length;
-    const indexes = [];
-
-    let comparisons = 0;
-    let occurrences = 0;
-
-    // create the bad match table
-    for (let i = 0; i < patternLength - 1; i++) {
-        badMatchTable[pattern[i]] = patternLength - i - 1;
-    }
-
-    // search the pattern in the text
-    let i = patternLength - 1;
-    while (i < textLength) {
-        let k = 0;
-        while (k < patternLength && pattern[patternLength - 1 - k] === text[i - k]) {
-            comparisons++;
-            k++;
-        }
-
-        if (k === patternLength) {
-            occurrences++;
-            console.log(`Found at index: ${i - patternLength + 1}`);
-            indexes.push(i - patternLength + 1);
-        }
-        comparisons++;
-        i += badMatchTable[text[i]] || patternLength;
-    }
-
-    return { indexes, comparisons, occurrences };
-}
+const fs = require('fs');
+const boyerMoore = require('./boyerMoore').boyerMoore;
+const bruteForce = require('./bruteForce').bruteForce;
+// const horspool = require('./horspool').horspool;
 
 function replaceRange(s, start, end, substitute) {
     return s.substring(0, start) + substitute + s.substring(end);
