@@ -26,7 +26,6 @@ function boyerMoore(text, pattern) {
 
         if (k === patternLength) {
             occurrences++;
-            console.log(`Found at index: ${i - patternLength + 1}`);
             indexes.push(i - patternLength + 1);
         }
         comparisons++;

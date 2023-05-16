@@ -17,7 +17,6 @@ function bruteForce(text, pattern) {
 
         if (j === patternLength) {
             occurrences++;
-            console.log(`Found at index: ${i}`);
             indexes.push(i);
         }
     }
