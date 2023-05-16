@@ -32,7 +32,7 @@ function isAllCharactersSame(pattern) {
 fs.readFile('sample1.html', 'utf8', (err, data) => {
     if (err) throw err;
 
-    let inputString = data.split("<header>")[1].split("</header>")[0];
+    let inputString = data.split("<body>")[1].split("</body>")[0];
     let pattern = "111111111111111";
 
     console.time("brute-force"); // start timer
