@@ -55,12 +55,10 @@ function boyerMoore(text, pattern) {
             indexes.push(i - patternLength + 1);
         }
         comparisons++;
-        const badMatchShift = badSymbolTable[text[i]];
-        const goodSuffixShift = goodSuffixTable[k - 1];
-        i += Math.max(badMatchShift || 0, goodSuffixShift);
+        const badMatchShift = badSymbolTable[text[i]] || badSymbolTable['*'];
+        i += badMatchShift;
     }
 
     return { badSymbolTable, goodSuffixTable, indexes, comparisons, occurrences };
 }
-boyerMoore("111111111111111000000000111112111111111111010101", "111111111111111")
 module.exports = { boyerMoore };
