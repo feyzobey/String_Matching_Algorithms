@@ -6,19 +6,34 @@ function boyerMoore(text, pattern) {
     const patternLength = pattern.length;
     const textLength = text.length;
     const indexes = [];
+    const badSymbolTable = {};
+    const goodSuffixTable = {};
 
     let comparisons = 0;
     let occurrences = 0;
-    // create the bad match table
+
+    // create bad symbol table
+    for (let i = 0; i < patternLength; i++) {
+        badSymbolTable[pattern[i]] = patternLength - i - 1;
+    }
+    badSymbolTable['*'] = patternLength;
+
+    // create good suffix table
     for (let i = 0; i < patternLength; i++) {
         badSymbolTable[pattern[i]] = Math.max(1, patternLength - i - 1);  
     }
     badSymbolTable['*'] = patternLength;
 
-    //---------------------------------------------
-    // good suffix table yok oluşturulması gerekiyor 
-    //---------------------------------------------
-
+    let j = 0;
+    for (let i = patternLength - 1; i >= 0; i--) {
+        if (goodSuffixTable[i] === i + 1) {
+            for (; j < patternLength - 1 - i; j++) {
+                if (goodSuffixTable[j] === patternLength) {
+                    goodSuffixTable[j] = patternLength - 1 - i;
+                }
+            }
+        }
+    }
 
     // search the pattern in the text
     let i = patternLength - 1;
@@ -34,10 +49,11 @@ function boyerMoore(text, pattern) {
             indexes.push(i - patternLength + 1);
         }
         comparisons++;
-        i += badSymbolTable[text[i]] || patternLength;
+        const badMatchShift = badSymbolTable[text[i]];
+        const goodSuffixShift = goodSuffixTable[k - 1];
+        i += Math.max(badMatchShift || 0, goodSuffixShift);
     }
-
-    return { badSymbolTable, indexes, comparisons, occurrences };
+    return { badSymbolTable, goodSuffixTable, indexes, comparisons, occurrences };
 }
 // boyerMoore("languageaasfdasdghs", "language")
 module.exports = { boyerMoore };
