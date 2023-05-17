@@ -1,7 +1,7 @@
 const fs = require('fs');
 const boyerMoore = require('./boyerMoore').boyerMoore;
 const bruteForce = require('./bruteForce').bruteForce;
-// const horspool = require('./horspool').horspool;
+const horspool = require('./horspool').horspool;
 
 function replaceRange(s, start, end, substitute) {
     return s.substring(0, start) + substitute + s.substring(end);
@@ -29,11 +29,11 @@ function isAllCharactersSame(pattern) {
     return true;
 }
 
-fs.readFile('sample1.html', 'utf8', (err, data) => {
+fs.readFile('sample2.html', 'utf8', (err, data) => {
     if (err) throw err;
 
     let inputString = data.split("<body>")[1].split("</body>")[0];
-    let pattern = "111111111111111";
+    let pattern = "language";
 
     console.time("brute-force"); // start timer
     const resultBruteForce = bruteForce(inputString, pattern);
@@ -43,13 +43,13 @@ fs.readFile('sample1.html', 'utf8', (err, data) => {
     const resultBoyerMoore = boyerMoore(inputString, pattern);
     console.timeEnd("boyer-moore"); // end timer
 
-    // console.time("horspool"); // start timer
-    // const resultHorspool = horspool(inputString, pattern);
-    // console.timeEnd("horspool"); // end timer
+    console.time("horspool"); // start timer
+    const resultHorspool = horspool(inputString, pattern);
+    console.timeEnd("horspool"); // end timer
 
     console.log(resultBruteForce);
     console.log(resultBoyerMoore);
-    // console.log(resultHorspool);
+    console.log(resultHorspool);
     
     let markedText = "";
     markedText += inputString;
@@ -62,7 +62,6 @@ fs.readFile('sample1.html', 'utf8', (err, data) => {
     let counter = 0;
     for (let i = 0; i < indexes.length; i++) {
         let index = indexes[i];
-        console.log(index);
         index += counter * 13;
         if (overlappingIndexes.includes(indexes[i]) && !nonOverlappingIndexes.includes(indexes[i])) {
             let rangeIndex;
