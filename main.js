@@ -60,7 +60,7 @@ fs.readFile('sample2.html', 'utf8', (err, data) => {
     process.stdout.write("BadSymbolTable: ");
     console.log(resultBoyerMoore.badSymbolTable);
     // console.log("**********");
-    console.log("GoodSuffixTable: ");
+    process.stdout.write("GoodSuffixTable: ");
     console.log(resultBoyerMoore.goodSuffixTable);
     console.log("**********");
     console.log(`Horspool\nComparisons: ${resultHorspool.comparisons}\nOccurrences: ${resultHorspool.occurrences}`);

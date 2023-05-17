@@ -35,16 +35,5 @@ function horspool(text, pattern) {
     }
 
     return { shiftTable, indexes, comparisons, occurrences };
-
-
-
-
-
-
-
-
-
 }
-
-
 module.exports = { horspool };
