@@ -59,10 +59,10 @@ fs.readFile('sample2.html', 'utf8', (err, data) => {
     console.log(`Boyer-Moore\nComparisons: ${resultBoyerMoore.comparisons}\nOccurrences: ${resultBoyerMoore.occurrences}`);
     process.stdout.write("BadSymbolTable: ");
     console.log(resultBoyerMoore.badSymbolTable);
-    console.log("**********");
-    // console.log("GoodSuffixTable: ");
-    // console.log(resultBoyerMoore.goodSuffixTable);
     // console.log("**********");
+    console.log("GoodSuffixTable: ");
+    console.log(resultBoyerMoore.goodSuffixTable);
+    console.log("**********");
     console.log(`Horspool\nComparisons: ${resultHorspool.comparisons}\nOccurrences: ${resultHorspool.occurrences}`);
     process.stdout.write("ShiftTable: ");
     console.log(resultHorspool.shiftTable);

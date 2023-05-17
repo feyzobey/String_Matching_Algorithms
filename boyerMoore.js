@@ -16,6 +16,7 @@ function boyerMoore(text, pattern) {
     }
     badSymbolTable['*'] = patternLength;
 
+
     // create good suffix table
     for (let i = 1; i < patternLength; i++) {
         goodSuffixTable[i] = patternLength;
@@ -33,7 +34,7 @@ function boyerMoore(text, pattern) {
             if (tempChar !== compareText[compareText.length - 1]) {
                 isAllSame = false;
                 break;
-            }            
+            }
         }
         if (isAllSame) {
             goodSuffixTable[i] = patternLength - sub.length;
@@ -61,5 +62,5 @@ function boyerMoore(text, pattern) {
 
     return { badSymbolTable, goodSuffixTable, indexes, comparisons, occurrences };
 }
-boyerMoore("1111111111111111111111111111111111111111111111111111011111", "111111110111011")
+boyerMoore("111111111111111000000000111112111111111111010101", "111111111111111")
 module.exports = { boyerMoore };
