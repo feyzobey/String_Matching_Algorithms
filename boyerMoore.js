@@ -2,7 +2,7 @@
 // Space complexity: O(m + n)
 function boyerMoore(text, pattern) {
     // create the bad match table
-    const badMatchTable = {};
+    const badSymbolTable = {};
     const patternLength = pattern.length;
     const textLength = text.length;
     const indexes = [];
@@ -11,9 +11,9 @@ function boyerMoore(text, pattern) {
     let occurrences = 0;
     // create the bad match table
     for (let i = 0; i < patternLength; i++) {
-        badMatchTable[pattern[i]] = Math.max(1, patternLength - i - 1);  
+        badSymbolTable[pattern[i]] = Math.max(1, patternLength - i - 1);  
     }
-    badMatchTable['*'] = patternLength;
+    badSymbolTable['*'] = patternLength;
 
     //---------------------------------------------
     // good suffix table yok oluşturulması gerekiyor 
@@ -34,10 +34,10 @@ function boyerMoore(text, pattern) {
             indexes.push(i - patternLength + 1);
         }
         comparisons++;
-        i += badMatchTable[text[i]] || patternLength;
+        i += badSymbolTable[text[i]] || patternLength;
     }
 
-    return { badMatchTable, indexes, comparisons, occurrences };
+    return { badSymbolTable, indexes, comparisons, occurrences };
 }
 // boyerMoore("languageaasfdasdghs", "language")
 module.exports = { boyerMoore };
