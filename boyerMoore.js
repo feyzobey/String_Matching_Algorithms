@@ -16,7 +16,6 @@ function boyerMoore(text, pattern) {
     }
     badSymbolTable['*'] = patternLength;
 
-
     // create good suffix table
     for (let i = 1; i < patternLength; i++) {
         goodSuffixTable[i] = patternLength;
@@ -41,10 +40,31 @@ function boyerMoore(text, pattern) {
         }
     }
 
+
+    for (let i = patternLength - 1; i >= 1; i--) {
+        let sub = pattern.substring(i, patternLength + 1);
+        let isAllSame = true;
+        for (let j = 0; j < sub.length; j++) {
+            const tempChar = sub[sub.length - 1 - j];
+            const compareText = pattern.substring(0, patternLength - sub.length - j);
+            if (compareText === '') {
+                break;
+            }
+            if (tempChar !== compareText[compareText.length - 1]) {
+                isAllSame = false;
+                break;
+            }
+        }
+        if (isAllSame) {
+            goodSuffixTable[i] = patternLength - sub.length;
+        }
+    }
+
     // search the pattern in the text
     let i = patternLength - 1;
     while (i < textLength) {
         let k = 0;
+
         while (k < patternLength && pattern[patternLength - 1 - k] === text[i - k]) {
             comparisons++;
             k++;
