@@ -1,39 +1,50 @@
+// Time complexity: O(mn)
+// Space complexity: O(m + n)
 function horspool(text, pattern) {
-    const p = pattern.length;
-    const t = text.length;
 
-    if (p > t) {
-        return -1;
-    }
-
-    // create table of bad characters
-    var table = {};
-    for (var i = 0; i < p - 1; i++) {
-        table[pattern[i]] = p - 1 - i;
-    } 
+    const shiftTable = {};
+    const patternLength = pattern.length;
+    const textLength = text.length;
+    const indexes = [];
 
     let comparisons = 0;
     let occurrences = 0;
-    const indexes = [];
+    
 
-    var i = p - 1;
-    while (i < t) {
-        var j = p - 1;
-        while (j >= 0 && pattern[j] == text[i]) {
-            if (j === 0) {
-                occurrences++;
-                indexes.push(i);
-            }
-            if (j === -1) {
-                indexes.push(i + 1);
-            }
+    // create the shift table
+    for (let i = 0; i < patternLength; i++) {
+        shiftTable[pattern[i]] = Math.max(1, patternLength - i - 1);
+    }
+    shiftTable['*'] = patternLength;
+
+    // search the pattern in the text
+    let i = patternLength - 1;
+    while (i < textLength) {
+        let k = 0;
+        while (k < patternLength && pattern[patternLength - 1 - k] === text[i - k]) {
             comparisons++;
-            j--;
-            i--;
+            k++;
+        }
+
+        if (k === patternLength) {
+            occurrences++;
+            indexes.push(i - patternLength + 1);
         }
         comparisons++;
-        i += table[text[i]] || p; // move i to the right
+        i += shiftTable[text[i]] || patternLength;
     }
-    return { table, indexes, comparisons, occurrences };
+
+    return { shiftTable, indexes, comparisons, occurrences };
+
+
+
+
+
+
+
+
+
 }
+
+
 module.exports = { horspool };
