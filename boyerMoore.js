@@ -9,12 +9,11 @@ function boyerMoore(text, pattern) {
 
     let comparisons = 0;
     let occurrences = 0;
-
     // create the bad match table
-    for (let i = 0; i < patternLength - 1; i++) {
-        badMatchTable[pattern[i]] = patternLength - i - 1;
+    for (let i = 0; i < patternLength; i++) {
+        badMatchTable[pattern[i]] = Math.max(1, patternLength - i - 1);  
     }
-
+    badMatchTable['*'] = patternLength;
     // search the pattern in the text
     let i = patternLength - 1;
     while (i < textLength) {
@@ -34,4 +33,5 @@ function boyerMoore(text, pattern) {
 
     return { badMatchTable, indexes, comparisons, occurrences };
 }
+boyerMoore("languageaasfdasdghs", "language")
 module.exports = { boyerMoore };
