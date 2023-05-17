@@ -14,6 +14,12 @@ function boyerMoore(text, pattern) {
         badMatchTable[pattern[i]] = Math.max(1, patternLength - i - 1);  
     }
     badMatchTable['*'] = patternLength;
+
+    //---------------------------------------------
+    // good suffix table yok oluşturulması gerekiyor 
+    //---------------------------------------------
+
+
     // search the pattern in the text
     let i = patternLength - 1;
     while (i < textLength) {
@@ -33,5 +39,5 @@ function boyerMoore(text, pattern) {
 
     return { badMatchTable, indexes, comparisons, occurrences };
 }
-boyerMoore("languageaasfdasdghs", "language")
+// boyerMoore("languageaasfdasdghs", "language")
 module.exports = { boyerMoore };
